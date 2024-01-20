@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <style>
+        /* Style for the map container */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        /* Style for the bus station marker */
+        .bus-station-icon {
+            background-color: red; /* Change the color as needed */
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            margin: -6px; /* Half of the width and height to center the marker */
+        }
+    </style>
+</head>
+<body>
+    <!-- Display nearest bus station -->
+    <p id="nearestBusStation"></p>
+
+    <!-- Map container -->
+    <div id="map" style="height: 400px; width: 100%;"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="bus-station.js"></script>
+</body>
+</html>

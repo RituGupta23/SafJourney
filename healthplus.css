@@ -1,0 +1,39 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: aqua;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Style bulleted points in paragraphs */
+.container p {
+    list-style-type: disc;
+    margin-bottom: 10px;
+    color: yellow;
+}
+
+/* Style bold words within bulleted points */
+.container li strong {
+    font-weight: bold;
+    color: palevioletred;
+}

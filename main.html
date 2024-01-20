@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="./photos/SafJourney.png">
+    <title>SafJourney</title>
+    <link rel="stylesheet" href="mainstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Nabla&family=Roboto&display=swap"
+        rel="stylesheet">
+
+    <script src="mainapp.js" defer></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <!-- nav -->
+            <div class="nav">
+                <div class="nav-option" style="opacity: 1;">
+                    <img class="logo" src="./photos/SafJourney.png">
+                    <!-- <i class="fa-solid fa-house"></i> -->
+                    <a href="#">SafJourney</a>
+                </div>
+                <div class="nav-option">
+                    <a href="#">HELPLINE</a>
+                </div>
+            </div>
+
+            <!-- library -->
+            <div class="library">
+                <div class="option">
+                    <div class="lib-options nav-option">
+                        <i class="fa-solid fa-user"></i>
+                        <a href="#">Your Profile</a>
+                    </div>
+                </div>
+                <div class="option">
+                    <div class="lib-options nav-option">
+                        <a href="./route/feature/main.html">Safe Route</a>
+                    </div>
+                </div>
+                <div class="option">
+                    <div class="lib-options nav-option">
+                        <a href="safety.html">Safety Tips</a>
+                    </div>
+                </div>
+                <div class="option">
+                    <div class="lib-options nav-option">
+                        <a href="healthplus.html">Health+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <nav class="navbar">
+                <div class="navbar-play">
+                    <div>
+                        <img class="logo" src="./photos/SafJourney.png">
+                    </div>
+                </div>
+                <div class="navbar-button">
+                    <a href="main.html">
+                        <button class="button marg navbar-prem">Home</button>
+                    </a>
+                    <a href="about_us.html">
+                        <button class="button marg navbar-prem">About Us</button>
+                    </a>
+                    <a href="index.html">
+                        <button class="button marg navbar-prem">Sign Out</button>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="content-options">
+                <div class="shows">
+                    <div class="shows-options">
+                        <a href="#" class="title">OnWard Safely!</a>
+                    </div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="image1"></div>
+                            <a href="./route/feature/main.html">
+                                <p class="name">Safe Route</p>
+                            </a>
+                            <p class="sub-name">To the user destination</p>
+                        </div>
+                        <div class="card">
+                            <div class="image2"></div>
+                            <a href="safety.html">
+                                <p class="name">Safety Tips</p>
+                            </a>
+                            <p class="sub-name">Access to wealth of safety</p>
+                        </div>
+                        <div class="card">
+                            <div class="image3"></div>
+                            <a href="healthplus.html">
+                                <p class="name">Health+</p>
+                            </a>
+                            <p class="sub-name">For emergency situations</p>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <button id="sosButton" onclick="showMessage()">SOS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Trattatello";
+}
+:root {
+  --text-color: white;
+  --bg-color: white;
+  --main-color: aqua;
+
+  --h1-font: 6rem;
+  --h2-font: 3rem;
+  --p-font: 1rem;
+}
+body {
+  color: var(--text-color);
+  background: black;
+  height: auto;
+}
+header {
+  position: relative;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  background: transparent;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 50s ease;
+}
+
+.logome {
+  height: 5rem;
+  width: 5rem;
+  margin-right: 3rem;
+}
+
+span {
+  color: var(--main-color);
+}
+.navbar {
+  display: flex;
+  padding: 20px 20px;
+  color: bisque;
+}
+.navbar a {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 15px 22px;
+  transition: all 0.5s ease;
+}
+.navbar a:hover {
+  color: var(--main-color);
+}
+
+.h-right {
+  display: flex;
+  align-items: center;
+}
+.h-right a:first-child {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin-right: 20px;
+}
+.h-right a {
+  vertical-align: middle;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-right: 18px;
+  margin-left: 5px;
+  transition: all 0.5s ease;
+}
+.h-right a:hover {
+  color: var(--main-color);
+  transform: translateY(-3px);
+}
+#menu-icon {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 10001;
+  display: none;
+}
+nav {
+  background: #f2e4e4;
+  display: flex;
+  align-items: center;
+}
+nav a {
+  color: #fff;
+}
+nav a:hover {
+  color: aquamarine;
+}
+.logo {
+  flex: 10;
+}
+.logo a {
+  display: flex;
+  align-items: center;
+  font-size: 100px;
+}
+.logo a:hover {
+  color: #fff;
+}
+.logo img {
+  width: 200px;
+  margin-right: 10px;
+  position: absolute;
+  left: 25px;
+  top: 20px;
+}
+section {
+  padding: 80px 13%;
+}
+
+.feature {
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.feature-content {
+  padding: 20px;
+  align-items: center;
+  flex: 1;
+  padding-right: 20px;
+}
+
+.feature .heading {
+  font-size: 1.5rem;
+  color: #03011a;
+}
+
+.feature button {
+  display: inline-block;
+  margin-top: 1rem;
+  background: aqua;
+  color: #fff;
+  padding: 0.5rem 0.5rem;
+  border: 0.2rem solid var(--blue);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.feature button:hover {
+  background: aquamarine;
+}
+
+.feature-info {
+  padding-top: 10px;
+}
+
+.feature-info #nearestBusStation {
+  color: aqua;
+}
+
+/* Style for the map container */
+#map {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 400px;
+  width: 100%;
+}
+
+/* Style for the bus station marker */
+.bus-station-icon {
+  background-color: red; /* Change the color as needed */
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px; /* Half of the width and height to center the marker */
+}
+
+/* Style for the bus information section */
+#busInfoSection {
+  display: none; /* Initially hide the bus information section */
+  padding: 20px;
+}
+
+#busInfoSection h2 {
+  font-style: bold;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#busInfoSection #busSelection {
+  font-size: 1rem;
+  background: aqua;
+  color: #fff;
+}
+
+#head {
+  color: aqua;
+  font-weight: bold;
+}
+
+#Zone {
+  background-color: red;
+}

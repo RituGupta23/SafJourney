@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width ,initial-scale=1" />
+    <title>NEXT BUS</title>
+
+    <!----custom css link-->
+    <link rel="stylesheet" href="main.css" />
+
+    <!----boxicons  link-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <!----google fonts link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/0f74a18b7a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <!-- <style>
+        /* Style for the map container */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        /* Style for the bus station marker */
+        .bus-station-icon {
+            background-color: red; /* Change the color as needed */
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            margin: -6px; /* Half of the width and height to center the marker */
+        }
+
+        /* Style for the bus information section */
+        #busInfoSection {
+            display: none; /* Initially hide the bus information section */
+        }
+    </style> -->
+  </head>
+  <body>
+    <!----header design-->
+    <header>
+      <img class="logome" src="SafJourney.png" alt="logo" />
+      <a href="#" class="logo"
+        >SAFE<br /><span>BUS<br /></span
+      ></a>
+      <!-- <ul class="navbar">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Information</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul> -->
+      <div class="h-right">
+        <!-- <a href="#">Follow Us</a>
+        <a href="#"><i class="ri-instagram-fill"></i></a>
+        <a href="#"><i class="ri-twitter-fill"></i></a>
+        <a href="#"><i class="ri-facebook-circle-fill"></i></a> -->
+        <div class="bx bx-menu" id="menu-icon"></div>
+      </div>
+    </header>
+
+
+    <!-- feature section -->
+
+    <div class="feature">
+      <div class="feature-content">
+        <p class="heading" id="head">Check Safe Bus Route</p>
+
+        <button onclick="getLocation()">View</button>
+
+        <!-- Display coordinates, address, and nearest bus station -->
+        <div class="feature-info">
+          <p id="demo"></p>
+          <p id="userAddress"></p>
+          <p id="nearestBusStation"></p>
+        </div>
+      </div>
+      <!-- Map container -->
+      <div id="map"></div>
+
+      <a href="map marker.html">
+        <button id="Zone">Danger Zone</button>
+      </a>
+      
+      <!-- Bus selection and bus information section -->
+      <div id="busInfoSection">
+        <h2>Select a Bus</h2>
+        <select id="busSelection" onchange="displayBusInfo(this.value)">
+          <option value="">Select a Bus</option>
+          <option value="HP123">HP123</option>
+          <option value="HP456">HP456</option>
+          <option value="HP789">HP789</option>
+       
+        </select>
+
+        <h2>Bus Information</h2>
+        <p id="busInfo"></p>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+      var x = document.getElementById("demo");
+      var userAddress = document.getElementById("userAddress");
+      var map; // Variable to store the map object
+      var initialCoordinates = [28.7041, 77.1025]; // Default initial coordinates (London)
+
+      // Create a map with initial coordinates
+      map = L.map("map").setView(initialCoordinates, 10);
+
+      // Add a tile layer from OpenStreetMap
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // A static list of bus stations for demonstration purposes
+      var busStations = [
+        { name: "Bus Station 1", latitude: 51.5, longitude: -0.1 },
+        { name: "Bus Station 2", latitude: 51.52, longitude: -0.12 },
+        { name: "Bus Station 3", latitude: 51.49, longitude: -0.09 },
+        // Add more bus stations here
+      ];
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(showPosition);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      // Function to calculate the distance between two coordinates (in meters)
+      function calculateDistance(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the Earth in km
+        var dLat = (lat2 - lat1) * (Math.PI / 180);
+        var dLon = (lon2 - lon1) * (Math.PI / 180);
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1 * (Math.PI / 180)) *
+            Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = R * c * 1000; // Convert to meters
+        return distance;
+      }
+
+      // Function to show the nearest bus station
+      function showNearestBusStation(latitude, longitude) {
+        var nearestStation = null;
+        var minDistance = Number.MAX_VALUE;
+
+        // Iterate through the list of bus stations and find the nearest one
+        for (var i = 0; i < busStations.length; i++) {
+          var station = busStations[i];
+          var distance = calculateDistance(
+            latitude,
+            longitude,
+            station.latitude,
+            station.longitude
+          );
+
+          if (distance < minDistance) {
+            nearestStation = station;
+            minDistance = distance;
+          }
+        }
+
+        if (nearestStation) {
+          // Display the nearest bus station
+          document.getElementById("nearestBusStation").innerHTML =
+            "Nearest Bus Station: " + nearestStation.name;
+
+          // Create a marker for the nearest bus station with a different color
+          var busStationMarker = L.marker(
+            [nearestStation.latitude, nearestStation.longitude],
+            {
+              icon: L.divIcon({ className: "bus-station-icon" }),
+            }
+          )
+            .addTo(map)
+            .bindPopup(nearestStation.name);
+        } else {
+          document.getElementById("nearestBusStation").innerHTML =
+            "No Bus Stations Found Nearby.";
+        }
+
+        // Show the bus selection and bus information section
+        document.getElementById("busInfoSection").style.display = "block";
+      }
+
+      // Function to show user's position and nearest bus station
+      function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        // Update the map view to the user's location
+        map.setView([latitude, longitude], 15);
+
+        // Create a marker at the specified coordinates
+        L.marker([latitude, longitude])
+          .addTo(map)
+          .bindPopup("Your Location")
+          .openPopup();
+
+        // Display coordinates
+        x.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+        // Fetch and display the address
+        fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Extract the formatted address from the API response
+            var address = data.display_name;
+            userAddress.innerHTML = "Address: " + address;
+
+            // Show the nearest bus station
+            showNearestBusStation(latitude, longitude);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            userAddress.innerHTML =
+              "An error occurred while fetching the address.";
+          });
+      }
+
+      // Function to display bus information when selected from the dropdown
+      function displayBusInfo(busNumber) {
+        var busInfo = document.getElementById("busInfo");
+
+        // Replace this static data with your dynamic data retrieval logic
+        var busData = {
+          busNumber: busNumber,
+          emissionCompliance: "Bharat Stage IV",
+          fuelType: "CNG",
+          driver: {
+            phoneNumber: "9876543210",
+            driverLicense: "DL123456",
+          },
+          currentLocation: {
+            latitude: 31.1048,
+            longitude: 77.1734,
+          },
+          speed: 40, // in km/h
+        };
+
+        if (busData) {
+          // Display bus information on the HTML page
+          busInfo.innerHTML = `
+                <strong>Bus Number:</strong> ${busData.busNumber}<br>
+                <strong>Emission Compliance:</strong> ${busData.emissionCompliance}<br>
+                <strong>Fuel Type:</strong> ${busData.fuelType}<br>
+                <strong>Driver Phone Number:</strong> ${busData.driver.phoneNumber}<br>
+                <strong>Driver License:</strong> ${busData.driver.driverLicense}<br>
+                <strong>Current Speed:</strong> ${busData.speed} km/h<br>
+                <strong>Current Location:</strong> Lat: ${busData.currentLocation.latitude}, Lon: ${busData.currentLocation.longitude}
+            `;
+        } else {
+          busInfo.innerHTML = "Bus not found.";
+        }
+      }
+    </script>
+  </body>
+</html>
